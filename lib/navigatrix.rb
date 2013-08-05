@@ -1,5 +1,6 @@
 require "navigatrix/version"
+require "navigatrix/item"
+require "navigatrix/item_collection"
 
 module Navigatrix
-  # Your code goes here...
 end

@@ -1,4 +1,8 @@
 # Navigatrix
+Navigation generation for Rails and Sinatra.
+
+## Installation
+Add `gem "navigatrix"` to your Gemfile and run `bundle install`.
 
 ## The Simplest Possible Navigation
 ```ERB
@@ -56,11 +60,12 @@ Assuming we're on the "/users/1" path, and a User is signed in, the resulting HT
 ```
 The "Users" item is active because the path "/users/1" matches the pattern `/\/users\/\d*/`.  The item is linked because we are not on the path "/users".
 
+
 ## List Item Configuration Options
-### `:path`
+##### `:path`
 Specifies where the navigation item should link to.
 
-### `:active_states`
+##### `:active_states`
 An array of state specification hashes used to control when a list item is considered "active".  By default, when an item is active, it receives an HTML class of "active". For example:
 ```Ruby
 active_states: [
@@ -72,10 +77,10 @@ The first state specification dictates that the item will be active when the cur
 
 The second state specification dictates that the item will be active with the current path is "/my-account".  `:path` can be a string or regular expression.
 
-### `:unlinked_states`
+##### `:unlinked_states`
 Also an array of state specification hashes (like `:active_states`).  The state specifications determine if the item should be linked.  By default, the item is unlinked if the current path is the same as the item path.  The `:unlinked_states` option can be used to override this behavior.
 
-### `:html_attributes`
+##### `:html_attributes`
 HTML attributes added to an item.
 ```Ruby
   "Item 3" => {
@@ -88,7 +93,7 @@ Results in the following HTML.
 <li id="nav-3"><a href="item_path">Item 3</a></li>
 ```
 
-### `:children`
+##### `:children`
 Used for creating nested navigations.  The `:children` should contain a navigation configuration.
 ```Ruby
 "Parent" => {
@@ -122,15 +127,15 @@ Results in the following HTML.
 </ul>
 ```
 
-### `:render?`
+##### `:render?`
 Determines if the navigation item is rendered.
 
 ## List Configuration Options
-### `:html_attributes`
+##### `:html_attributes`
 HTML attributes added to an the list.
 
-### `:active_class`
+##### `:active_class`
 Determines which HTML class is applied to list items when the item is active.
 
-### `:inactive_class`
+##### `:inactive_class`
 Determines which HTML class is applied to list items when the item is *not* active.

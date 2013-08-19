@@ -1,8 +1,12 @@
+require "ostruct"
+require 'forwardable'
+require "navigatrix/configuration"
+
 module Navigatrix
   class Item < Struct.new(:name, :config, :context)
     extend Forwardable
     delegate :current_path => :context
-    delegate [:active, :unlinked, :path, :nav_class] => :config
+    delegate [:render?, :html_attributes] => :config
 
     def active?
       applicable_active_state? ||
@@ -26,12 +30,8 @@ module Navigatrix
       @children ||= ItemCollection.new(config.children, context).items
     end
 
-    def render?
-      config.fetch(:render, true)
-    end
-
     def path
-      @path ||= Path.new(config.path).call(context)
+      @path ||= Path.new(config.path).call(context).to_s
     end
 
     private
@@ -49,19 +49,19 @@ module Navigatrix
     end
 
     def unlinked_states_specified?
-      unlinked.any?
+      unlinked_states.any?
     end
 
     def active_states
-      @active_states ||= active.map { |active_state| State.new(active_state, context) }
+      @active_states ||= config.active_states.map { |active_state| State.new(active_state, context) }
     end
 
     def unlinked_states
-      @unlinked_states ||= unlinked.map { |unlinked_state| State.new(unlinked_state, context) }
+      @unlinked_states ||= config.unlinked_states.map { |unlinked_state| State.new(unlinked_state, context) }
     end
 
     def config
-      @config ||= Configuration.new(super)
+      @config ||= Configuration.wrap(super)
     end
 
     class Path < Struct.new(:source)

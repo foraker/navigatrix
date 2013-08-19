@@ -1,4 +1,3 @@
-require "ostruct"
 require File.expand_path("../../lib/navigatrix/item", __FILE__)
 require File.expand_path("../../lib/navigatrix/item_collection", __FILE__)
 require File.expand_path("../../lib/navigatrix/configuration", __FILE__)
@@ -38,7 +37,7 @@ module Navigatrix
       end
 
       context "a controller is specified in the config" do
-        let(:config) { {"active" => {"controller" => "controller_1"}} }
+        let(:config) { {"active_states" => {"controller" => "controller_1"}} }
 
         it "is true if the specified controller is the current controller" do
           context.stub(:controller_name => "controller_1", :action_name => "index")
@@ -53,7 +52,7 @@ module Navigatrix
 
       context "a controller and action are specified in the config" do
         let(:config) do
-          {"active" => {"controller" => "controller_2", "actions" => "index"}}
+          {"active_states" => {"controller" => "controller_2", "actions" => "index"}}
         end
 
         it "is true if the specified controller/action combination is the current controller/action combination" do
@@ -74,7 +73,7 @@ module Navigatrix
 
       context "multiple active states are specified" do
         let(:config) do
-          {"active" => [
+          {"active_states" => [
             {"controller" => "controller_3"},
             {"controller" => "controller_4", "actions" => "show"},
           ]}
@@ -125,8 +124,8 @@ module Navigatrix
       end
 
       context "unlink states are configured" do
-        context "a controller is specified in the config" do
-          let(:config) { {"unlinked" => {"controller" => "controller_1"}} }
+        context "a controller is specified" do
+          let(:config) { {"unlinked_states" => {"controller" => "controller_1"}} }
 
           it "is true if the specified controller is the current controller" do
             context.stub(:controller_name => "controller_1", :action_name => "index")
@@ -139,9 +138,9 @@ module Navigatrix
           end
         end
 
-        context "a controller and action are specified in the config" do
+        context "a controller and action are specified config" do
           let(:config) do
-            {"unlinked" => {"controller" => "controller_2", "actions" => "index"}}
+            {"unlinked_states" => {"controller" => "controller_2", "actions" => "index"}}
           end
 
           it "is true if the specified controller/action combination is the current controller/action combination" do
@@ -162,7 +161,7 @@ module Navigatrix
 
         context "multiple active states are specified" do
           let(:config) do
-            {"unlinked" => [
+            {"unlinked_states" => [
               {"controller" => "controller_3"},
               {"controller" => "controller_4", "actions" => "show"},
             ]}

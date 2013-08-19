@@ -4,7 +4,7 @@ Navigation generation for Rails and Sinatra.
 ## Installation
 Add `gem "navigatrix"` to your Gemfile and run `bundle install`.
 
-## The Simplest Possible Navigation
+### The Simplest Possible Navigation
 ```ERB
 <%= render_navigation({
   "Home"     => "/",
@@ -23,7 +23,7 @@ Assuming we're on the "/about-us" path, the resulting HTML will look like this:
 </ul>
 ```
 
-## A More Sophisticated Configuration
+### A More Sophisticated Configuration
 ```ERB
 <%= render_navigation({
   "Home" => "/",

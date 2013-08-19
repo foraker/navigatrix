@@ -1,4 +1,6 @@
 # Navigatrix
+[![Build Status](https://api.travis-ci.org/foraker/navigatrix.png?branch=master)](http://travis-ci.org/foraker/navigatrix)
+
 Navigation generation for Rails and Sinatra.
 
 ## Installation

@@ -1,21 +1,51 @@
 require "active_support/core_ext"
 
 module Navigatrix
-  class Configuration < OpenStruct
-    def initialize(raw_config)
-      super(raw_config || {})
+  module Configuration
+    def self.wrap(wrapped)
+      wrapped.is_a?(Hash) ? AdvancedConfig.new(wrapped) : BasicConfig.new(wrapped)
     end
 
-    def active
-      Array.wrap(super)
+    class BasicConfig < Struct.new(:path)
+      def active_states
+        [{path: path}]
+      end
+
+      def unlinked_states
+        active
+      end
+
+      def children
+        {}
+      end
+
+      def html_attributes
+        {}
+      end
+
+      def render?
+        true
+      end
     end
 
-    def unlinked
-      Array.wrap(super)
-    end
+    class AdvancedConfig < OpenStruct
+      DEFAULTS = {
+        :html_attributes => {},
+        :render?         => true,
+        :children        => {}
+      }
 
-    def children
-      super || {}
+      def initialize(raw_config)
+        super(DEFAULTS.merge(raw_config) || {})
+      end
+
+      def active_states
+        Array.wrap(super)
+      end
+
+      def unlinked_states
+        Array.wrap(super)
+      end
     end
   end
 end

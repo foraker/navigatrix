@@ -12,7 +12,7 @@ module Navigatrix
       end
 
       def unlinked_states
-        active
+        active_states
       end
 
       def children

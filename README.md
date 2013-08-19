@@ -1,5 +1,6 @@
 # Navigatrix
 [![Build Status](https://api.travis-ci.org/foraker/navigatrix.png?branch=master)](http://travis-ci.org/foraker/navigatrix)
+[![Code Climate](https://codeclimate.com/github/foraker/navigatrix.png)](https://codeclimate.com/github/foraker/navigatrix)
 
 Navigation generation for Rails and Sinatra.
 

@@ -36,7 +36,7 @@ module Navigatrix
         item.should_not be_active
       end
 
-      context "a controller is specified in the config" do
+      context "a controller name is specified in the config" do
         let(:config) { {"active_states" => {"controller" => "controller_1"}} }
 
         it "is true if the specified controller is the current controller" do
@@ -47,6 +47,30 @@ module Navigatrix
         it "is true regardless of action name" do
           context.stub(:controller_name => "controller_1", :action_name => "edit")
           new_item(config).should be_active
+        end
+      end
+
+      context "a controller pattern is specified in the config" do
+        let(:config) { {"active_states" => {"controller" => /^users/}} }
+
+        it "is true if the specified controller is the current controller" do
+          context.stub(:controller_name => "users", :action_name => "index")
+          new_item(config).should be_active
+        end
+
+        it "is true if the specified controller matches the current controller" do
+          context.stub(:controller_name => "users/comments", :action_name => "index")
+          new_item(config).should be_active
+        end
+
+        it "is true regardless of action name" do
+          context.stub(:controller_name => "users", :action_name => "edit")
+          new_item(config).should be_active
+        end
+
+        it "is false if the name does not match" do
+          context.stub(:controller_name => "comments/users", :action_name => "edit")
+          new_item(config).should_not be_active
         end
       end
 

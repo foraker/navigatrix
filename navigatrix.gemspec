@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Navigatrix::VERSION
   spec.authors       = ["Ben Eddy"]
   spec.email         = ["bae@foraker.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = %q{Navigation Generation}
+  spec.summary       = %q{Navigation generation for Rails and Sinatra}
   spec.homepage      = ""
   spec.license       = "MIT"
 

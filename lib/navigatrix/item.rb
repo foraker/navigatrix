@@ -86,7 +86,7 @@ module Navigatrix
       end
 
       def controller_matches?
-        controller_name == controller
+        match?(controller, controller_name)
       end
 
       def action_matches?
@@ -94,7 +94,11 @@ module Navigatrix
       end
 
       def path_matches?
-        path.is_a?(Regexp) ? current_path[path] : path == current_path
+        match?(path, current_path)
+      end
+
+      def match?(pattern, target)
+        pattern.is_a?(Regexp) ? target[pattern] : pattern == target
       end
 
       def actions

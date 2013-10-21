@@ -5,7 +5,7 @@
 Navigation generation for Rails and Sinatra.
 
 ## Installation
-Add `gem "navigatrix"` to your Gemfile and run `bundle install`.
+Add `gem "navigatrix", github: "foraker/navigatrix"` to your Gemfile and run `bundle install`.
 
 ### The Simplest Possible Navigation
 ```ERB
@@ -58,10 +58,10 @@ Assuming we're on the "/users/1" path, and a User is signed in, the resulting HT
 <ul class="nav">
   <li><a href="/">Home</a></li>
   <li class="active-nav-item">Users</li>
-  <li><a href="/sign_in">Sign In</a></li>
+  <li><a href="/sign_out">Sign Out</a></li>
 </ul>
 ```
-The "Users" item is active because the path "/users/1" matches the pattern `/\/users\/\d*/`.  The item is linked because we are not on the path "/users".
+The "Users" item is active and not linked because the path "/users/1" matches the pattern `/\/users\/\d*/`.  The "Home" item is linked because we are not on the path "/".
 
 
 ## List Item Configuration Options

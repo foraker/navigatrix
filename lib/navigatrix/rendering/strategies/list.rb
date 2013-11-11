@@ -61,7 +61,7 @@ module Navigatrix::Rendering::Strategies
       end
 
       def unlinked_content
-        name
+        content_tag(:span, name)
       end
 
       def name

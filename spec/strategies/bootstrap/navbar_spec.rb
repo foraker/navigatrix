@@ -17,7 +17,7 @@ module Navigatrix::Rendering::Strategies
 
       describe "a list item" do
         it "does not have a class of 'dropdown'" do
-          rendered_item["class"].should_not include("dropdown")
+          rendered_item["class"].should be_nil
         end
 
         context "with children" do

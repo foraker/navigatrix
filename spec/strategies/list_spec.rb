@@ -1,11 +1,13 @@
-require "capybara"
-require File.expand_path("../../support/list_rendering_strategy", __FILE__)
-require File.expand_path("../../../lib/navigatrix/rendering/strategies/list", __FILE__)
+require "spec_helper"
 
-module Navigatrix::Rendering::Strategies
-  describe List do
-    include ListRenderingStrategy
+module Navigatrix
+  module Rendering
+    module Strategies
+      describe List do
+        include ListRenderingStrategy
 
-    it_should_behave_like "a list rendering strategy"
+        it_should_behave_like "a list rendering strategy"
+      end
+    end
   end
 end

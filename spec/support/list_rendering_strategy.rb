@@ -55,6 +55,10 @@ module ListRenderingStrategy
         rendered.find("li")["id"].should include("item-1")
       end
 
+      it "it does include blank HTML attributes" do
+        rendered.find("li")["class"].should be_nil
+      end
+
       context "the item is linked" do
         before do
           item.stub(:linked? => true, :path => "/path")

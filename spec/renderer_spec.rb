@@ -1,4 +1,4 @@
-require File.expand_path("../../lib/navigatrix/renderer", __FILE__)
+require "spec_helper"
 
 module Navigatrix
   describe Renderer do

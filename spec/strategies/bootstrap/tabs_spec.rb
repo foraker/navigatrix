@@ -1,6 +1,4 @@
-require "capybara"
-require File.expand_path("../../../support/list_rendering_strategy", __FILE__)
-require File.expand_path("../../../../lib/navigatrix/rendering/strategies/bootstrap/tabs", __FILE__)
+require "spec_helper"
 
 module Navigatrix::Rendering::Strategies
   module Bootstrap

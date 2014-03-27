@@ -1,6 +1,4 @@
-require File.expand_path("../../lib/navigatrix/item", __FILE__)
-require File.expand_path("../../lib/navigatrix/item_collection", __FILE__)
-require File.expand_path("../../lib/navigatrix/configuration", __FILE__)
+require "spec_helper"
 
 module Navigatrix
   describe Item do

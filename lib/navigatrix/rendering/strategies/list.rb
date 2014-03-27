@@ -1,4 +1,5 @@
 require "action_view"
+require "delegate"
 
 module Navigatrix::Rendering::Strategies
   class List < Struct.new(:items, :options)

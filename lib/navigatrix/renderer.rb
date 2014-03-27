@@ -7,13 +7,11 @@ module Navigatrix
   class Renderer
     attr_reader :configuration, :strategy, :render_context, :render_options
 
-    REGISTERED_STRATEGIES = {
-      :unordered_list   => Rendering::Strategies::List,
-      :bootstrap_navbar => Rendering::Strategies::Bootstrap::Navbar,
-      :bootstrap_tabs   => Rendering::Strategies::Bootstrap::Tabs
-    }
-
     class MissingStrategy < NameError ; end
+
+    def self.strategies
+      Navigatrix.list_renderers
+    end
 
     def initialize(configuration, options)
       @configuration  = configuration
@@ -35,7 +33,7 @@ module Navigatrix
     def find_strategy(strategy_or_name)
       return strategy_or_name if strategy_or_name.is_a?(Class)
       strategy_or_name ||= :unordered_list
-      REGISTERED_STRATEGIES[strategy_or_name] || raise(MissingStrategy, "can't find strategy #{strategy_name}")
+      self.class.strategies.fetch(strategy_or_name) { raise(MissingStrategy, "can't find strategy #{strategy_name}") }
     end
   end
 end

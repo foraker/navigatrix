@@ -55,12 +55,12 @@ module Navigatrix
       end
 
       it "finds strategies by name" do
-        stub_const("Navigatrix::Renderer::REGISTERED_STRATEGIES", {:bootstrap => StrategyDouble})
+        described_class.stub(strategies: {:bootstrap => StrategyDouble})
         render({:strategy => :bootstrap}).should be_rendered
       end
 
       it "defaults to the unordered_list strategy" do
-        stub_const("Navigatrix::Renderer::REGISTERED_STRATEGIES", {:unordered_list => StrategyDouble})
+        described_class.stub(strategies: {:unordered_list => StrategyDouble})
         render({:strategy => nil}).should be_rendered
       end
 

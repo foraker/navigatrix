@@ -2,6 +2,7 @@ require "navigatrix/version"
 require "navigatrix/item"
 require "navigatrix/item_collection"
 require "navigatrix/renderer"
+require "navigatrix/builder"
 require 'navigatrix/integration/rails' if defined?(Rails)
 require 'navigatrix/integration/sinatra' if defined?(Sinatra)
 
@@ -17,13 +18,15 @@ module Navigatrix
   }
 
   mattr_accessor :item_renderers
-  self.item_renderers = {}
+  self.item_renderers = {
+    :item => Rendering::Strategies::Item
+  }
 
   def register_list_renderer(name, &block)
-    list_renderers[name] = Class.new(Navigatrix::Rendering::Strategies::List, &block)
+    list_renderers[name] = ListBuilder.build(&block)
   end
 
   def register_item_renderer(name, &block)
-    item_renderers[name] = Class.new(Navigatrix::Rendering::Strategies::List::Item, &block)
+    item_renderers[name] = ItemBuilder.build(&block)
   end
 end

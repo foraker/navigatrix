@@ -5,7 +5,7 @@
 Navigation generation for Rails and Sinatra.
 
 ## Installation
-Add `gem "navigatrix", github: "foraker/navigatrix"` to your Gemfile and run `bundle install`.
+Add `gem "navigatrix"` to your Gemfile and run `bundle install`.
 
 ### The Simplest Possible Navigation
 ```ERB

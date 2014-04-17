@@ -46,9 +46,13 @@ Assuming we're on the "/about-us" path, the resulting HTML will look like this:
     :render? => user_signed_in?
   }
 }, {
-  :active_class    => "active-nav-item",
-  :html_attributes => {
-    :class => "nav"
+  :item => {
+    :active_class => "active-nav-item"
+  },
+  :list => {
+    :html_attributes => {
+      :class => "nav"
+    }
   }
 }) %>
 ```
@@ -57,14 +61,45 @@ Assuming we're on the "/users/1" path, and a User is signed in, the resulting HT
 ```HTML
 <ul class="nav">
   <li><a href="/">Home</a></li>
-  <li class="active-nav-item">Users</li>
+  <li class="active-nav-item"><a href="/users">Users</a></li>
   <li><a href="/sign_out">Sign Out</a></li>
 </ul>
 ```
 The "Users" item is active and not linked because the path "/users/1" matches the pattern `/\/users\/\d*/`.  The "Home" item is linked because we are not on the path "/".
 
+## List Configuration Options
+List configuration options are supplied via the `:list` option when rendering a navigation.  For example,
+
+```Ruby
+render_navigation(config, {
+  list: {
+    html_attributes: {
+      class: "nav"
+    }
+  }
+})
+```
+
+A list accepts the following configuration options:
+
+##### `:html_attributes`
+HTML attributes added to an the list.
 
 ## List Item Configuration Options
+
+List item configuration options can be supplied to all list items or a single list item.  Supply options to a single list item via the navigation configuration.
+
+```Ruby
+render_navigation({
+  "Home" => {
+    path: "/",
+    active_class: "home-active"
+  }
+})
+```
+
+The following options are supported.
+
 ##### `:path`
 Specifies where the navigation item should link to.
 
@@ -133,12 +168,78 @@ Results in the following HTML.
 ##### `:render?`
 Determines if the navigation item is rendered.
 
-## List Configuration Options
-##### `:html_attributes`
-HTML attributes added to an the list.
+### Supplying options to all list items
+List configuration options are supplied via the `:item` option when rendering a navigation.  For example,
+```Ruby
+render_navigation(config, {
+  item: {
+    active_class: "active-item"
+  }
+})
+```
+
+Supported options are:
 
 ##### `:active_class`
 Determines which HTML class is applied to list items when the item is active.
 
 ##### `:inactive_class`
 Determines which HTML class is applied to list items when the item is *not* active.
+
+`active_class`, `inactive_class`, `html_attributes`.
+
+## Building Custom List Renderers
+
+To change the default list rendering from \<ul> tags to \<section> tags with an id of "nav", create a custom list renderer:
+
+```Ruby
+Navigatrix.register_list_renderer(:my_custom_list) do |renderer|
+  renderer.wrapper do |items, html_attributes|
+    content_tag(:section, items, html_attributes.merge_attribute(:id, "nav"))
+  end
+end
+```
+
+```ERB
+<%= render_navigation({
+  "Home"     => "/",
+  "About Us" => "/about-us",
+}, {
+  list: {renderer: :my_custom_list}
+}) %>
+```
+
+## Building Custom Item Renderers
+
+If the basic list and and item configuration, custom renders can be registered.
+
+For example, to add change the default item rendering from \<li> tags to \<p> tags, create a custom item renderer:
+
+```Ruby
+Navigatrix.register_item_renderer(:my_custom_item) do |renderer|
+  renderer.wrapper do |content, children, html_attributes|
+    content(:p, content + children, html_attributes)
+  end
+end
+```
+
+```ERB
+<%= render_navigation({
+  "Home"     => "/",
+  "About Us" => "/about-us",
+}, {
+  item: {renderer: :my_custom_item}
+}) %>
+```
+
+#### All item rendering options
+
+`wrapper` - wraps item content - accepts `content, children, html_attributes`
+
+`linked` - content when the item is linked - accepts `name, path`
+
+`unlinked` - content when the item is not linked - accepts `name, path`
+
+`html_attributes` - HTML attributes for the item
+
+`children_options` - attributes passed to the child list

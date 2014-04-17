@@ -22,8 +22,6 @@ module Navigatrix
         end
 
         def rendered_strategy?(strategy_klass)
-          puts klass
-          puts strategy_klass
           rendered? and klass == strategy_klass
         end
       end
@@ -33,13 +31,22 @@ module Navigatrix
       let(:item_collection)   { double(:items => double) }
 
       before do
+        Rendering::StrategyFactory.stub(:find_list_strategy)
+          .with("list")
+          .and_return(StrategyDouble)
+
         wrapped_context = double
-        Rendering::Context.stub(:new).with(rendering_context).and_return(wrapped_context)
-        ItemCollection.stub(:new).with(config, wrapped_context).and_return(item_collection)
+        Rendering::Context.stub(:new)
+          .with(rendering_context)
+          .and_return(wrapped_context)
+
+        ItemCollection.stub(:new)
+          .with(config, wrapped_context)
+          .and_return(item_collection)
       end
 
-      context "a specified strategy" do
-        subject { render(:strategy => StrategyDouble) }
+      describe "#render" do
+        subject { render }
 
         it "renders via the strategy" do
           subject.should be_rendered
@@ -50,24 +57,20 @@ module Navigatrix
         end
 
         it "passes the rendering options" do
-          subject.options.should == {:render_option  => "an option"}
+          subject.options.should == {
+            :renderer      =>"list",
+            :render_option => "an option"
+          }
         end
       end
 
-      it "finds strategies by name" do
-        described_class.stub(strategies: {:bootstrap => StrategyDouble})
-        render({:strategy => :bootstrap}).should be_rendered
-      end
-
-      it "defaults to the unordered_list strategy" do
-        described_class.stub(strategies: {:unordered_list => StrategyDouble})
-        render({:strategy => nil}).should be_rendered
-      end
-
-      def render(options)
+      def render(options = {})
         defaults = {
           :render_context => rendering_context,
-          :render_option  => "an option"
+          :list => {
+            :renderer      => "list",
+            :render_option => "an option"
+          }
         }
 
         Renderer.new(config, defaults.merge(options)).render

@@ -3,12 +3,12 @@ module ListRenderingStrategy
     base.let(:item) { build_item }
   end
 
-  def rendered_item(options = {})
-    rendered(options).find("wrapper > ul > li")
+  def rendered_item(*args)
+    rendered(*args).find("wrapper > ul > li")
   end
 
-  def rendered(options = {})
-    Capybara.string("<wrapper>" + described_class.new([item], options).render + "</wrapper>")
+  def rendered(list_options = {}, item_options = {})
+    Capybara.string("<wrapper>" + described_class.new([item], list_options, item_options).render + "</wrapper>")
   end
 
   def build_item(options = {})
@@ -17,6 +17,8 @@ module ListRenderingStrategy
       :render?         => true,
       :linked?         => false,
       :active?         => false,
+      :active_class    => nil,
+      :inactive_class  => nil,
       :html_attributes => {},
       :has_children?   => false
     }
@@ -83,7 +85,7 @@ module ListRenderingStrategy
         end
 
         it "allows the active class to be specified" do
-          rendered_item(:active_class => "alt-active")["class"].should include("alt-active")
+          rendered_item({}, {:active_class => "alt-active"})["class"].should include("alt-active")
         end
 
         it "does not overwrite item attributes" do

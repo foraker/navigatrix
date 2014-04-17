@@ -1,11 +1,15 @@
-module Navigatrix::Rendering::Strategies
-  module Bootstrap
-    class Tabs < List
+module Navigatrix
+  module Rendering
+    module Strategies
+      module Bootstrap
+        class Tabs < List
 
-      private
+          private
 
-      def html_attributes
-        super.merge_attribute(:class, "nav nav-tabs")
+          def html_attributes
+            super.merge_attribute(:class, "nav nav-tabs")
+          end
+        end
       end
     end
   end

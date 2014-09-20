@@ -23,7 +23,7 @@ module ListRenderingStrategy
       :has_children?   => false
     }
 
-    double(defaults.merge(options))
+    OpenStruct.new(defaults.merge(options))
   end
 
   shared_examples_for("a list rendering strategy") do

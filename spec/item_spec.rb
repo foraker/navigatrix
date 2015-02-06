@@ -138,6 +138,12 @@ module Navigatrix
           item.should be_unlinked
         end
 
+        it "ignores anchors on the item path" do
+          item = new_item({})
+          item.stub(:path => "/path_1#anchor")
+          item.should be_unlinked
+        end
+
         it "is false when the current_path is not the same the item path" do
           item = new_item({})
           item.stub(:path => "/path_2")

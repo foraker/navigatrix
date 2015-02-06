@@ -45,7 +45,7 @@ module Navigatrix
     end
 
     def currently_on_path?
-      current_path == path
+      current_path == path.split('#').first
     end
 
     def unlinked_states_specified?

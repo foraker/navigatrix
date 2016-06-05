@@ -135,7 +135,7 @@ Results in the following HTML.
 Used for creating nested navigations.  The `:children` should contain a navigation configuration.
 ```Ruby
 "Parent" => {
-  :path => "/parent_path"
+  :path => "/parent_path",
   :children => {
     "Child 1" => "/child_1_path",
     "Child 2" => {

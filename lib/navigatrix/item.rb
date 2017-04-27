@@ -14,6 +14,10 @@ module Navigatrix
       unlinked?
     end
 
+    def contains?
+      active_children? && linked?
+    end
+    
     def linked?
       !unlinked?
     end

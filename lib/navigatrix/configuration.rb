@@ -31,6 +31,10 @@ module Navigatrix
       def inactive_class
         nil
       end
+      
+      def contains_class
+        nil
+      end
 
       def render?
         true
@@ -41,6 +45,7 @@ module Navigatrix
       DEFAULTS = {
         :active_class    => nil,
         :inactive_class  => nil,
+        :contains_class  => nil,
         :html_attributes => {},
         :render?         => true,
         :children        => {}

@@ -81,7 +81,7 @@ module Navigatrix
           else
             output << inactive_class
           end
-          output.join(' ')
+          output.compact.join(' ')
         end
 
         def active_class

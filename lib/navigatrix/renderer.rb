@@ -40,7 +40,7 @@ module Navigatrix
 
     def item_options
       render_options
-        .slice(:active_class, :inactive_class, :contains_class)
+        .slice(:active_class, :inactive_class, :contains_class, :has_children_class)
         .merge(render_options.fetch(:item, {}))
     end
   end

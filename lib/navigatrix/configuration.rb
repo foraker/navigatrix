@@ -31,8 +31,12 @@ module Navigatrix
       def inactive_class
         nil
       end
-      
+
       def contains_class
+        nil
+      end
+
+      def has_children_class
         nil
       end
 
@@ -43,12 +47,13 @@ module Navigatrix
 
     class AdvancedConfig < OpenStruct
       DEFAULTS = {
-        :active_class    => nil,
-        :inactive_class  => nil,
-        :contains_class  => nil,
-        :html_attributes => {},
-        :render?         => true,
-        :children        => {}
+        :active_class         => nil,
+        :inactive_class       => nil,
+        :contains_class       => nil,
+        :has_children_class   => nil,
+        :html_attributes      => {},
+        :render?              => true,
+        :children             => {}
       }
 
       def initialize(raw_config)

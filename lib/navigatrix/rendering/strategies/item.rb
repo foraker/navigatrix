@@ -32,7 +32,7 @@ module Navigatrix
         end
 
         def linked_content
-          link_to(name, path, {})
+          link_to(name, path)
         end
 
         def unlinked_content

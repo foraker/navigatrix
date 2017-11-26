@@ -6,12 +6,16 @@ module Navigatrix
   class Item < Struct.new(:name, :config, :context)
     extend Forwardable
     delegate :current_path => :context
-    delegate [:render?, :html_attributes, :active_class, :inactive_class] => :config
+    delegate [:render?, :html_attributes, :active_class, :inactive_class, :contains_class, :has_children_class] => :config
 
     def active?
       applicable_active_state? ||
       active_children? ||
       unlinked?
+    end
+
+    def contains?
+      active_children? && linked?
     end
 
     def linked?

@@ -70,7 +70,18 @@ module Navigatrix
         end
 
         def html_class
-          active? ? active_class : inactive_class
+          output = []
+          if has_children?
+            output << has_children_class
+          end
+          if contains?
+            output << contains_class
+          elsif active?
+            output << active_class
+          else
+            output << inactive_class
+          end
+          output.compact.join(' ')
         end
 
         def active_class
@@ -79,6 +90,14 @@ module Navigatrix
 
         def inactive_class
           super.presence || options[:inactive_class]
+        end
+
+        def contains_class
+          super.presence || options[:contains_class]
+        end
+
+        def has_children_class
+          options[:has_children_class] || "has-children"
         end
 
         def children_renderer
